@@ -7,21 +7,7 @@ RUN groupadd -r memcache && useradd -r -g memcache memcache
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN set -eux; \
-    ARCH="$(dpkg --print-architecture)"; \
-    case "${ARCH}" in \
-       aarch64|arm64|amd64|x86_64) \
-         LIBEVENT_VER='2.1-6'; \
-        ;; \
-       riscv64) \
-         LIBEVENT_VER='2.1-7'; \
-        ;; \
-       *) \
-         echo "Unsupported arch: ${ARCH}"; \
-         exit 1; \
-         ;; \
-    esac; \
-    apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER} && rm -rf /var/lib/apt/lists/*;
+RUN apt-get update && apt-get install -y --no-install-recommends libevent-2.1-7 && rm -rf /var/lib/apt/lists/*;
 
 ENV MEMCACHED_VERSION 1.6.10
 
