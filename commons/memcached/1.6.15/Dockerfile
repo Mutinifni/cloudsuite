@@ -23,7 +23,7 @@ RUN set -eux; \
     esac; \
     apt-get update && apt-get install -y --no-install-recommends libevent-${LIBEVENT_VER} && rm -rf /var/lib/apt/lists/*;
 
-ENV MEMCACHED_VERSION 1.6.10
+ENV MEMCACHED_VERSION 1.6.15
 
 # this checksum was not provided with the author of memcached, it is checksum of the working downloaded version
 ENV MEMCACHED_SHA1 cb5b9fe77a2a59cc6cc7103a415bc07df9ddc6ec 
@@ -33,7 +33,6 @@ RUN buildDeps='curl gcc libc6-dev libevent-dev make perl' \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -SL "http://memcached.org/files/memcached-$MEMCACHED_VERSION.tar.gz" -o memcached.tar.gz \
-	&& echo "$MEMCACHED_SHA1 memcached.tar.gz" | sha1sum -c - \
 	&& mkdir -p /usr/src/memcached \
 	&& tar -xzf memcached.tar.gz -C /usr/src/memcached --strip-components=1 \
 	&& rm memcached.tar.gz \

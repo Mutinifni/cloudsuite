@@ -1,4 +1,4 @@
-FROM cloudsuite/faban:1.4
+FROM cloudsuitetest/faban:1.4
 
 ENV PACKAGES_URL http://cloudsuite.ch/download/web_search
 ENV SEARCH_DRIVER_URL $PACKAGES_URL/search.tar.gz

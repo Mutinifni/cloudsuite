@@ -1,4 +1,4 @@
-FROM cloudsuite/java:adoptopenjdk8
+FROM cloudsuitetest/java:adoptopenjdk8
 
 RUN apt-get update -y \
 	&& apt-get install -y --no-install-recommends procps telnet lsof wget unzip \

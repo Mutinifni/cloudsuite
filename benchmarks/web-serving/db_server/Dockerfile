@@ -1,4 +1,4 @@
-FROM cloudsuite/mysql:mariadb-10.3
+FROM cloudsuitetest/mysql:mariadb-10.3
 
 ENV root_password root
 
