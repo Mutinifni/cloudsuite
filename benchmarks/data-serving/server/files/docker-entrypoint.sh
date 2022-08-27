@@ -2,7 +2,8 @@
 set -e
 
 echo Server IP
-hostname --ip-address
+SERVER_IP=$(hostname -I | awk '{print $1}')
+echo ${SERVER_IP}
 
 if [ -z "$CASSANDRA_SEEDS" ]; then
     NEED_INIT=1
@@ -22,13 +23,13 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 
 	: ${CASSANDRA_LISTEN_ADDRESS='auto'}
 	if [ "$CASSANDRA_LISTEN_ADDRESS" = 'auto' ]; then
-		CASSANDRA_LISTEN_ADDRESS="$(hostname --ip-address)"
+		CASSANDRA_LISTEN_ADDRESS="${SERVER_IP}"
 	fi
 
 	: ${CASSANDRA_BROADCAST_ADDRESS="$CASSANDRA_LISTEN_ADDRESS"}
 
 	if [ "$CASSANDRA_BROADCAST_ADDRESS" = 'auto' ]; then
-		CASSANDRA_BROADCAST_ADDRESS="$(hostname --ip-address)"
+		CASSANDRA_BROADCAST_ADDRESS="${SERVER_IP}"
 	fi
 	: ${CASSANDRA_BROADCAST_RPC_ADDRESS:=$CASSANDRA_BROADCAST_ADDRESS}
 
@@ -36,7 +37,7 @@ if [ "$1" = 'cassandra' ] || [ "$1" = 'bash' ]; then
 		: ${CASSANDRA_SEEDS:="cassandra"}
 	fi
 	: ${CASSANDRA_SEEDS:="$CASSANDRA_BROADCAST_ADDRESS"}
-	
+
 	sed -ri 's/(- seeds:) "127.0.0.1"/\1 "'"$CASSANDRA_SEEDS"'"/' "$CASSANDRA_CONFIG/cassandra.yaml"
 
 	for yaml in \
